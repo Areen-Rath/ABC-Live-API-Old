@@ -22,7 +22,7 @@ def th_fetch():
         try:
             if a.text:
                 links.append(a["href"])
-                titles.append(a.text.replace("\n", ""))
+                titles.append(a.text.replace("\n", "").replace("\t", "").strip())
         except:
             continue
     
@@ -58,10 +58,11 @@ def scrape_more(link):
         desc_img.append(desc.text)
 
     img = article_soup.find("source")
-    print(img)
     if not img:
         desc_img.append(None)
     else:
         desc_img.append(img["srcset"])
 
     return desc_img
+
+print(th_fetch())

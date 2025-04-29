@@ -19,11 +19,9 @@ def et_fetch():
     a_data = soup.find(id = "topStories")
     a_tags = a_data.find_all("a")
     for a in a_tags:
-        if a["href"][36:57] == "/markets/stocks/news/":
-            links.append(a["href"])
+        if a["href"][:21] == "/markets/stocks/news/":
+            links.append(f"https://economictimes.indiatimes.com/{a["href"]}")
             titles.append(a.text)
-
-    print(links)
     
     with ThreadPoolExecutor(max_workers = len(links)) as p:
         future = list(p.submit(scrape_more, link).result() for link in links)
