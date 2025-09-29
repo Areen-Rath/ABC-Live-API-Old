@@ -1,30 +1,21 @@
-from flask import Flask, jsonify
+from fastapi import FastAPI
 from mc_fetcher import mc_fetch
 from et_fetcher import et_fetch
-from th_fetcher import th_fetch
+from bl_fetcher import bl_fetch
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route("/moneycontrol")
+@app.get("/moneycontrol")
 def mc():
     data = mc_fetch()
-    return jsonify({
-        "data": data
-    }), 200
+    return { "data": data }
 
-@app.route("/economic_times")
+@app.get("/economic_times")
 def et():
     data = et_fetch()
-    return jsonify({
-        "data": data
-    }), 200
+    return { "data": data }
 
-@app.route("/the_hindu")
-def bs():
-    data = th_fetch()
-    return jsonify({
-        "data": data
-    }), 200
-
-if __name__ == "__main__":
-    app.run()
+@app.get("/business_line")
+def bl():
+    data = bl_fetch()
+    return { "data": data }
